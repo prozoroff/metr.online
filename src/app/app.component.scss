@@ -1,0 +1,131 @@
+// styles applied on :host are applied on the current component, "app" in this case
+:host {
+  display: block;
+  min-height: 100vh; /* will cover the 100% of viewport */
+  overflow: hidden;
+  position: relative;
+}
+
+header {
+  background-color: #f0f0f0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  min-width: 574px;
+}
+
+@media (max-width: 400) {
+    header *{font-size: 24px;}
+}
+
+main {
+  padding: 1em;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 100px;
+  display: block;
+  min-width: 574px;
+}
+
+body {
+    position: relative;
+    min-height: 100%;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.8em;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  overflow:hidden;
+  box-shadow: 2px -2px 10px rgba(0, 0, 0, 0.5);
+  background-color: #f0f0f0;
+  color: black;
+  min-width: 574px;
+}
+
+header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+header ul li.selector { 
+  float: right; 
+  margin: 12px 1em;
+}
+
+header li {
+    float: left;
+}
+
+header li a {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: black;
+}
+
+header li a:hover:not(.active) {
+    background-color: #5FBFF9;
+}
+
+.active {
+    background-color: #96CDFF;
+}
+
+.logo_container { 
+  background-color: white;
+  color: darkgray;
+  padding: 5px;
+  font-size: 1.2em;
+}
+
+.city{
+  color: black;
+}
+ 
+footer li a{
+  text-decoration: underline;
+  color: steelblue;
+  cursor: pointer;
+}
+
+footer li{
+  display: inline;
+  margin: 0 2px;
+}
+
+footer ul{
+   list-style-type: none;
+   overflow: hidden;
+   -webkit-padding-start: 0px;
+}
+
+.footer_cities {
+  font-size: 1.2em;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+
+/deep/ .modal-class a { 
+  cursor: pointer; 
+  }
+
+.modal-title {
+  color: black;
+}
+
+/deep/ .modal-xl { width: 300px }
+
+/deep/ .select-city-modal {width: 400px }
+

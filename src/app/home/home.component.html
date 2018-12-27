@@ -1,0 +1,17 @@
+<!-- <div class="charts" infinite-scroll [infiniteScrollDistance]="scrollDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()"> -->
+<div class="charts"> 
+  <h2>{{title}}</h2>
+  <div *ngFor="let chart of charts" class="col-xs-0 col-xs-12 chart">
+    <h3 class="blockTitle">{{chart.blockTitle}}</h3>
+    <div class="col-xs-12">
+      <div class="chart_content">
+      <div class="col-xs-0 col-lg-1"></div>
+      <div style="float: right" class="col-lg-1"></div>
+      <my-chart class="col-xs-12 col-lg-6" [class.right]='chart.right' [options]='chart'>
+        Loading...
+      </my-chart>
+      <my-description class="col-xs-12 col-lg-4" [text]='chart.description'></my-description>
+    </div>
+    </div>
+  </div>
+</div>

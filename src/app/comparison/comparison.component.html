@@ -1,0 +1,53 @@
+<!--<h2>Сравнение стоимости недвижимости по городам</h2>-->
+
+<div class="comparison_container">
+        <div class='tile' (click)="citiesClick()">
+                <div class='tile_content'>
+                        <h4>Города в сравнении</h4>
+                        <h2>{{citiesString}}</h2>
+                </div>
+        </div>
+</div>
+
+<div class="charts">
+
+<my-chart [options]='averagePriceChart'>
+        Loading...
+</my-chart>
+
+<my-chart [options]='averageMeterChart'>
+        Loading...
+</my-chart>
+
+</div>
+
+
+<bs-modal cssClass="modal-xl" #selectModal>
+
+    <bs-modal-header>
+        <h4 class="modal-title text-center">Города в сравнении</h4>
+    </bs-modal-header>
+
+    <bs-modal-body class="text-center">
+
+        <tr class="col-xs-12" style="margin-bottom: 10px;">
+            <td>
+                <input type="checkbox" [checked]="selectAllValue" (change)="selectAll()">
+            </td>
+            <td style="padding-left: 5px">Выделить все</td>
+        </tr>
+
+        <tr *ngFor="let city of citiesToSelect" class="col-xs-12">
+            <td>
+                <input type="checkbox" [checked]="citiesToCompare.indexOf(city) > -1" [value]="city" (change)="modalResult(city)">
+            </td>
+            <td style="padding-left: 5px">{{ city.name }}</td>
+        </tr>
+
+    </bs-modal-body>
+
+     <bs-modal-footer>
+        <button type="button" class="btn btn-default col-xs-4 col-xs-offset-4" (click)="modalClose(selectModal)">Готово</button>
+     </bs-modal-footer>
+
+</bs-modal>

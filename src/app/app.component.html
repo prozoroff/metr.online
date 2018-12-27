@@ -1,0 +1,55 @@
+<header>
+<ul>
+  <li [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']" ><a [routerLink]="['overview']">Обзор</a></li>
+  <li [routerLinkActive]="['active']"><a [routerLink]="['comparison']">Сравнение</a></li>
+  <li [routerLinkActive]="['active']"><a [routerLink]="['calculator']">Калькулятор</a></li>
+  <li [routerLinkActive]="['active']"><a [routerLink]="['about']">О проекте</a></li>
+  <li class='selector'><select class="city" [(ngModel)]="selectedCity" (ngModelChange)="cityChanged()">
+      <option *ngFor="let city of cities" [ngValue]="city">{{city.name}}</option>
+    </select></li>
+</ul>
+</header>
+<main>
+  <router-outlet></router-outlet>
+  <bs-modal cssClass="select-city-modal modal-class" #selectModal>
+
+    <bs-modal-header>
+        <h4 class="modal-title text-center">Выбор города</h4>
+    </bs-modal-header>
+
+    <bs-modal-body class="text-center">
+        
+        <tr *ngFor="let city of citiesToSelect" class="col-xs-12 col-sm-6">
+            <td>
+                <a (click)="modalResult(city)">{{ city.name }}</a>
+            </td>
+</tr>
+
+</bs-modal-body>
+
+</bs-modal>
+</main>
+<footer>
+    <div class="footer_cities">
+        <div class="col-xs-12">
+            <ul>
+                <li><a href="/overview">Обзор</a></li>
+                <li><a href="/comparison">Сравнение</a></li>
+                <li><a href="/calculator">Калькулятор</a></li>
+                <li><a href="/about">О проекте</a></li>
+            </ul>
+        </div>
+
+        <div class="col-xs-8 col-xs-offset-2">
+            <ul>
+                <li *ngFor="let city of cities" (click)="cityChanged(city)">
+                    <a style="color: #232323;">{{city.name}}</a>
+                </li>
+            </ul>
+            <p><a href="mailto:contact@metr.online">contact@metr.online</a></p>
+        </div>
+        
+    </div>
+</footer>
+
+

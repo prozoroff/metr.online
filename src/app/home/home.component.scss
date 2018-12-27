@@ -1,0 +1,34 @@
+// component styles are encapsulated and only applied to their components
+* {
+  color: #0F0F00;
+}
+
+.right{
+  float: right;
+}
+
+.chart{
+  margin-top: 40px;
+}
+
+.chart:first-of-type{
+  margin-top: 0px;
+}
+
+.chart_content{
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chart:last-of-type{
+  margin-bottom: 300px;
+}
+
+.blockTitle{
+  margin-bottom: 40px;
+  color: #303030
+}
+
+/deep/ .modal-xl a { cursor: pointer; }
+

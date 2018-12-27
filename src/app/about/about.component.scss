@@ -1,0 +1,22 @@
+* {
+  color: black;
+}
+
+img:hover {
+    transform: scale(1.05,1.05);
+}
+
+img {
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+}
+
+.container{
+	padding-top: 20px;
+}
+
+.container{
+  margin-bottom: 300px;
+}

@@ -1,0 +1,105 @@
+<h2>{{pageTitle}}</h2>
+<div class='calculator_container'>
+    <div class='tile col-md-3 col-xs-12' (click)="squareClick()">
+        <div class='tile_content'>
+            <h4>Площадь</h4>
+            <h1>{{square}} м²</h1>
+        </div>
+    </div>
+    <div class='tile col-md-3 col-xs-12' (click)="roomCountClick()">
+        <div class='tile_content'>
+            <h4>Комнат</h4>
+            <h1>{{roomCount}}</h1>
+        </div>
+    </div>
+    <div class='tile col-md-6 col-xs-12' (click)="constructionTypeClick()">
+        <div class='tile_content'>
+            <h4>Тип дома</h4>
+            <h1>{{constructionType}}</h1>
+        </div>
+    </div>
+    <div class='tile col-xs-12' (click)="districtClick()">
+        <div class='tile_content'>
+            <h4>Район</h4>
+            <h1>{{district}}</h1>
+        </div>
+    </div>
+    <div class='tile col-md-6 col-xs-12' (click)="floorClick()">
+        <div class='tile_content'>
+            <h4>Этаж</h4>
+            <h1>{{floor}}</h1>
+        </div>
+    </div>
+    <div class='tile col-md-6 col-xs-12' (click)="floorInBuildingClick()">
+        <div class='tile_content'>
+            <h4>Этажей в доме</h4>
+            <h1>{{floorInBuilding}}</h1>
+        </div>
+    </div>
+    <div class='result tile col-md-6 col-md-offset-3 col-xs-offset-0 col-xs-12'>
+        <div class='result_content'>
+            <h4>Примерная стоимость квартиры *</h4>
+            <img [hidden]="!calculating" id="preloader" src="img/preloader.gif">
+            <h1 [hidden]="calculating">{{resultPrice}}</h1>
+        </div>
+    </div>
+
+    <my-description class="col-xs-12 description" [text]='description'></my-description>
+</div>
+
+
+<bs-modal cssClass="modal-xl" #selectModal>
+
+    <bs-modal-header>
+        <h4 class="modal-title text-center">{{title}}</h4>
+    </bs-modal-header>
+
+    <bs-modal-body class="text-center">
+        <!-- <select id="select_id" style="width: 100%" [(ngModel)]="result" (ngModelChange)="modalResult()">
+            <option *ngFor="let item of items" [ngValue]="item">{{item}}</option>
+        </select>-->
+
+        <tr *ngFor="let item of items" class="col-xs-12">
+            <td>
+                <input type="radio" name="radiogroup" [checked]="item === result" [value]="item" (change)="modalResult(item)">
+            </td>
+            <td style="padding-left: 5px">{{ item }}</td>
+        </tr>
+
+    </bs-modal-body>
+
+    <bs-modal-footer>
+        <button type="button" class="btn btn-default col-xs-4 col-xs-offset-4" (click)="modalClose(selectModal)">Готово</button>
+    </bs-modal-footer>
+
+</bs-modal>
+
+<bs-modal cssClass="modal-xl" #numberModal>
+    <bs-modal-header>
+        <h4 class="modal-title text-center">{{title}}</h4>
+    </bs-modal-header>
+    <bs-modal-body>
+        <h3>{{result}} {{unitStr}}</h3>
+        <input type="range" [min]="range[0]" [max]="range[1]" step="1" [(ngModel)]="result" (ngModelChange)="modalResult()">
+    </bs-modal-body>
+    <bs-modal-footer>
+        <button type="button" class="btn btn-default col-xs-4 col-xs-offset-4" (click)="modalClose(numberModal)">Готово</button>
+    </bs-modal-footer>
+</bs-modal>
+
+<bs-modal cssClass="modal-xl" #radioModal>
+    <bs-modal-header>
+        <h4 class="modal-title text-center">{{title}}</h4>
+    </bs-modal-header>
+    <bs-modal-body>
+        <tr *ngFor="let item of items">
+            <td>
+                <input type="radio" name="radiogroup" [checked]="item.val === roomCount" [value]="item.val" (change)="modalResult(item.val)">
+            </td>
+            <td style="padding-left: 5px">{{ item.desc }}</td>
+        </tr>
+    </bs-modal-body>
+    <bs-modal-footer>
+        <button type="button" class="btn btn-default col-xs-4 col-xs-offset-4" (click)="modalClose(radioModal)">Готово</button>
+    </bs-modal-footer>
+</bs-modal>
