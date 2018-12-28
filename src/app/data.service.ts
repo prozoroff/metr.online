@@ -113,20 +113,7 @@ export class DataService {
     }
 
     getVolumeByDistrict(): any {
-        const data = this.volume_by_district.data,
-            keys = Object.keys(data);
-
-        let result = [];
-
-        for (let i = 0, l = keys.length; i < l; i++) {
-            const key = keys[i];
-            result.push([key, data[key]]);
-        }
-
-        return result.sort((a, b) => { return a[1] > b[1] ? 1 : -1; });
-    }
-    getVolumeByDistrictDesc(): any {
-        return this.volume_by_district.desc;
+        return this.loadData('volume_by_district', this.city);
     }
 
     getPriceByConstructionType(): any {

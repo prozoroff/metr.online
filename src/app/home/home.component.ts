@@ -3,7 +3,8 @@ import { DataService } from '../data.service';
 import { ApiService } from '../shared';
 import { Location } from '@angular/common';
 
-const tenDaysStep = 10 * 3600 * 1000 * 24;
+const tenDaysStep = 10 * 3600 * 1000 * 24,
+  districtsToShow = 15;
 
 @Component({
   selector: 'my-home',
@@ -174,67 +175,56 @@ export class HomeComponent {
       })
     });
 
+    this.dataService.getVolumeByDistrict().subscribe(volume => {
 
-    // //volume by district
-    // ///////////////////////////////////////////////////////////////
+      const volumeByDistrict = Object.keys(volume.data).map(name => [name, volume.data[name]]).
+        sort((a, b) => { return a[1] > b[1] ? 1 : -1; }),
+        data = volumeByDistrict.filter((x, i) => i < districtsToShow).map(x => ({ name: x[0], y: x[1] })),
+        rest = volumeByDistrict.filter((x, i) => i >= districtsToShow).reduce((a, b) => a + b[1], 0);
 
-    // let volumeByDistrict = this.dataService.getVolumeByDistrict().sort((a, b) => a[1] < b[1] ? 1 : -1),
-    //   data = [],
-    //   rest = 0;
+      if (rest > 0) {
+        data.push({
+          name: 'Остальные',
+          y: rest
+        });
+      }
 
-    // volumeByDistrict.map(item => {
-    //   if (data.length < 15) {
-    //     data.push({
-    //       name: item[0],
-    //       y: item[1]
-    //     });
-    //   }
-    //   else {
-    //     rest += item[1];
-    //   }
-    // });
+      this.charts.push({
+        blockTitle: 'Объем предложения на рынке по районам',
+        description: volume.desc,
+        right: true,
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: 'none',
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                fontSize: '1.2em',
+                color: 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          name: 'Доля',
+          colorByPoint: true,
+          data: data
+        }]
+      });
+    });
 
-    // if (rest > 0) {
-    //   data.push({
-    //     name: 'Остальные',
-    //     y: rest
-    //   });
-    // }
-
-    // this.volumeByDistrictOptions = {
-    //   blockTitle: 'Объем предложения на рынке по районам',
-    //   description: this.dataService.getVolumeByDistrictDesc(),
-    //   right: true,
-    //   chart: {
-    //     plotBackgroundColor: null,
-    //     plotBorderWidth: null,
-    //     plotShadow: false,
-    //     type: 'pie'
-    //   },
-    //   title: 'none',
-    //   tooltip: {
-    //     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    //   },
-    //   plotOptions: {
-    //     pie: {
-    //       allowPointSelect: true,
-    //       cursor: 'pointer',
-    //       dataLabels: {
-    //         enabled: true,
-    //         format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-    //         style: {
-    //           fontSize: '1.2em',
-    //           color: 'black'
-    //         }
-    //       }
-    //     }
-    //   },
-    //   series: [{
-    //     name: 'Доля',
-    //     colorByPoint: true,
-    //     data: data
-    //   }]
-    // };
 
     // //price by construction type
     // ///////////////////////////////////////////////////////////////
