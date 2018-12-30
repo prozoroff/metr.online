@@ -225,102 +225,86 @@ export class HomeComponent {
       });
     });
 
+    this.dataService.getPriceByConstructionType().subscribe(values => {
+      const data = values.data,
+        result = Object.keys(data).map(key => [key, data[key]]).sort((a, b) => { return a[1] > b[1] ? 1 : -1; });
 
-    // //price by construction type
-    // ///////////////////////////////////////////////////////////////
+      this.charts.push({
+        blockTitle: 'Средняя цена квадратного метра в зависимости от типа постройки',
+        description: values.desc,
+        right: true,
+        title: 'none',
+        chart: {
+          type: 'column'
+        },
+        xAxis: {
+          type: 'category',
+          labels: { style: { fontSize: '14px' } }
+        },
+        yAxis: {
+          title: { text: 'Стоимость, тыс. руб.', style: { fontSize: '14px' }, },
+          labels: {
+            style: { fontSize: '14px' },
+            formatter: function () {
+              return (this.value / 1000).toFixed(2);
+            }
+          }
+        },
+        series: [
+          { data: result, name: 'Квадратный метр' }
+        ]
+      });
+    })
 
-    // let priceByConstructionType = this.dataService.getPriceByConstructionType();
-
-    // this.priceByConstructionTypeOptions = {
-    //   blockTitle: 'Средняя цена квадратного метра в зависимости от типа постройки',
-    //   description: this.dataService.getPriceByConstructionTypeDesc(),
-    //   right: true,
-    //   title: 'none',
-    //   chart: {
-    //     type: 'column'
-    //   },
-    //   xAxis: {
-    //     type: 'category',
-    //     labels: { style: { fontSize:'14px' } }
-    //   },
-    //   yAxis: {
-    //     title: { text: 'Стоимость, тыс. руб.', style: { fontSize:'14px' }, },
-    //     labels: {
-    //       style: { fontSize:'14px' },
-    //       formatter: function () {
-    //         return (this.value / 1000).toFixed(2);
-    //       }
-    //     }
-    //   },
-    //   series: [
-    //     { data: priceByConstructionType, name: 'Квадратный метр' }
-    //   ]
-    // };
-
-
-    // //room count ratio
-    // ///////////////////////////////////////////////////////////////
-
-    // let roomCount = this.dataService.getRoomCountRatio();
-
-    // this.roomCountOptions = {
-    //   blockTitle: 'Соотношение предложений на рынке по числу комнат',
-    //   description: this.dataService.getRoomCountRatioDesc(),
-    //   chart: {
-    //     plotBackgroundColor: null,
-    //     plotBorderWidth: null,
-    //     plotShadow: false,
-    //     type: 'pie'
-    //   },
-    //   title: 'none',
-    //   tooltip: {
-    //     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    //   },
-    //   plotOptions: {
-    //     pie: {
-    //       allowPointSelect: true,
-    //       cursor: 'pointer',
-    //       dataLabels: {
-    //         enabled: true,
-    //         format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-    //         style: {
-    //           fontSize:'14px',
-    //           color: 'black'
-    //         }
-    //       }
-    //     }
-    //   },
-    //   series: [{
-    //     name: 'Доля',
-    //     colorByPoint: true,
-    //     data: [{
-    //       name: 'Однокомнатные',
-    //       y: roomCount[0]
-    //     }, {
-    //       name: 'Двухкомнатные',
-    //       y: roomCount[1]
-    //     }, {
-    //       name: 'Трехкомнатные',
-    //       y: roomCount[2]
-    //     }]
-    //   }]
-    // };
-
-    // this.charts = [];
-
-    // this.charts.push(this.allCharts.pop());
-    // this.charts.push(this.allCharts.pop());
-    // this.charts.push(this.allCharts.pop());
-    // this.charts.push(this.allCharts.pop());
+    this.dataService.getRoomCountRatio().subscribe(values => {
+      this.charts.push({
+        blockTitle: 'Соотношение предложений на рынке по числу комнат',
+        description: values.desc,
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: 'none',
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                fontSize: '14px',
+                color: 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          name: 'Доля',
+          colorByPoint: true,
+          data: [{
+            name: 'Однокомнатные',
+            y: values.data[0]
+          }, {
+            name: 'Двухкомнатные',
+            y: values.data[1]
+          }, {
+            name: 'Трехкомнатные',
+            y: values.data[2]
+          }, {
+            name: 'Четырехкомнатные',
+            y: values.data[3]
+          }]
+        }]
+      })
+    });
 
   }
-
-  // onScrollDown() {
-  //   if (this.allCharts.length) {
-  //     this.charts.push(this.allCharts.pop());
-  //   }
-  // }
-
 }
 
 function parseDate(dateStr: string): Date {
