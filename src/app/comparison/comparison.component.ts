@@ -112,7 +112,7 @@ export class ComparisonComponent {
 
         this.citiesString = this.citiesToCompare.map(city => city.name).join(', ');
 
-        this.dataService.getAveragePriceComparison().subscribe(values => {
+        this.dataService.getAveragePriceComparison().then(values => {
             const result = Object.keys(values).map(key => [key, values[key]]);
 
             let series = [{
@@ -170,7 +170,7 @@ export class ComparisonComponent {
 
         })
 
-        this.dataService.getAverageMeterComparson().subscribe(values => {
+        this.dataService.getAverageMeterComparson().then(values => {
 
             const result = Object.keys(values).map(key => {
                 return [key, values[key].reduce((a, b) => a + b, 0) / (values[key].length)];

@@ -24,6 +24,11 @@ export class HomeComponent {
   charts: any;
 
   constructor(private api: ApiService, private dataService: DataService, private location: Location) {
+
+    if (this.api.currentCity) {
+      this.refresh();
+    }
+
     this.api.cityChanged.subscribe(() => { this.refresh(); });
   };
 
@@ -36,7 +41,7 @@ export class HomeComponent {
 
     this.charts = [];
 
-    this.dataService.getAveragePrice().subscribe(average => {
+    this.dataService.getAveragePrice().then(average => {
       const timeValues = getTimeValues(
         parseDate(average.date),
         tenDaysStep,
@@ -85,7 +90,7 @@ export class HomeComponent {
       });
     });
 
-    this.dataService.getMeterPrice().subscribe(meter => {
+    this.dataService.getMeterPrice().then(meter => {
       const timeValues = getTimeValues(
         parseDate(meter.date),
         tenDaysStep,
@@ -121,7 +126,7 @@ export class HomeComponent {
       })
     });
 
-    this.dataService.getPriceByDistrict().subscribe(priceByDistrict => {
+    this.dataService.getPriceByDistrict().then(priceByDistrict => {
 
       const data = priceByDistrict.data,
         priceData = Object.keys(data).map(name => [name, data[name]]).
@@ -175,7 +180,7 @@ export class HomeComponent {
       })
     });
 
-    this.dataService.getVolumeByDistrict().subscribe(volume => {
+    this.dataService.getVolumeByDistrict().then(volume => {
 
       const volumeByDistrict = Object.keys(volume.data).map(name => [name, volume.data[name]]).
         sort((a, b) => { return a[1] > b[1] ? 1 : -1; }),
@@ -225,7 +230,7 @@ export class HomeComponent {
       });
     });
 
-    this.dataService.getPriceByConstructionType().subscribe(values => {
+    this.dataService.getPriceByConstructionType().then(values => {
       const data = values.data,
         result = Object.keys(data).map(key => [key, data[key]]).sort((a, b) => { return a[1] > b[1] ? 1 : -1; });
 
@@ -256,7 +261,7 @@ export class HomeComponent {
       });
     })
 
-    this.dataService.getRoomCountRatio().subscribe(values => {
+    this.dataService.getRoomCountRatio().then(values => {
       this.charts.push({
         blockTitle: 'Соотношение предложений на рынке по числу комнат',
         description: values.desc,

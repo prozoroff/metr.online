@@ -148,31 +148,34 @@ export class CalculatorComponent {
 
     refresh() {
 
-        // this.location.replaceState('calculator?city=' + this.api.currentCity.id);
+        this.dataService.isReady() && this.dataService.getDistricts().then(districts =>
+            this.dataService.getConstructionTypes().then(constructionTypes => {
+                this.location.replaceState('calculator?city=' + this.api.currentCity.id);
 
-        // this.pageTitle = 'Расчет стоимости квартиры в ' + this.api.currentCity.nameRod;
+                this.pageTitle = 'Расчет стоимости квартиры в ' + this.api.currentCity.nameRod;
 
-        // this.dataService.init(this.api.currentCity.id);
-        // this.availableDistricts = this.dataService.getDistricts().sort();
-        // this.district = this.availableDistricts[this.random(1, this.availableDistricts.length)];
-        // this.roomCount = this.random(1, 3);
-        // this.square = this.random(10, 30) + this.roomCount * this.random(10, 30);
-        // this.floor = this.random(1, 9);;
-        // this.floorInBuilding = 9;
-        // this.range = [1, 20];
-        // this.rooms = [{
-        //     val: 1,
-        //     desc: '1-комнатная'
-        // }, {
-        //     val: 2,
-        //     desc: '2-комнатная'
-        // }, {
-        //     val: 3,
-        //     desc: '3-комнатная'
-        // }];
-        // this.constructionTypes = this.dataService.getConstructionTypes();
-        // this.constructionType = this.constructionTypes[this.constructionTypes.length - 1];
-        // this.calculate();
+                this.dataService.init(this.api.currentCity.id);
+                this.availableDistricts = districts.sort();
+                this.district = this.availableDistricts[this.random(1, this.availableDistricts.length)];
+                this.roomCount = this.random(1, 3);
+                this.square = this.random(10, 30) + this.roomCount * this.random(10, 30);
+                this.floor = this.random(1, 9);;
+                this.floorInBuilding = 9;
+                this.range = [1, 20];
+                this.rooms = [{
+                    val: 1,
+                    desc: '1-комнатная'
+                }, {
+                    val: 2,
+                    desc: '2-комнатная'
+                }, {
+                    val: 3,
+                    desc: '3-комнатная'
+                }];
+                this.constructionTypes = constructionTypes;
+                this.constructionType = this.constructionTypes[this.constructionTypes.length - 1];
+                this.calculate();
+            }))
     }
 
     toReadable(price: number) {

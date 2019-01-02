@@ -27,7 +27,7 @@ export class DataService {
     }
 
     loadData(dataId: string, cityId?: string) {
-        return this.loadJSON(dataId, cityId);
+        return this.loadJSON(dataId, cityId).toPromise();
     }
 
     getAveragePriceComparison(): any {
@@ -60,6 +60,22 @@ export class DataService {
 
     getPriceByConstructionType(): any {
         return this.loadData('price_by_construction_type', this.city);
+    }
+
+    getConstructionTypes(): any {
+        return new Promise(resolve => {
+            return this.getPriceByConstructionType().then(v => resolve(Object.keys(v.data)));
+        })
+    }
+
+    getDistricts(): any {
+        return new Promise(resolve => {
+            return this.getVolumeByDistrict().then(v => resolve(Object.keys(v.data)));
+        })
+    }
+
+    isReady(): boolean{
+        return !!this.city;
     }
 
 }
