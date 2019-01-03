@@ -49,7 +49,7 @@ export class CalculatorComponent {
     title: string;
     pageTitle: string;
     description: string = '* данная величина стоимости квартиры является приблизительным значением, полученным ' +
-    'с применением методов машинного обучения на основе анализа рынка недвижимости за последний месяц.';
+        'с применением методов машинного обучения на основе анализа рынка недвижимости за последний месяц.';
 
     districtClick() {
         this.changedParam = 'district';
@@ -147,8 +147,8 @@ export class CalculatorComponent {
     }
 
     refresh() {
-
-        this.dataService.isReady() && this.dataService.getDistricts().then(districts =>
+        this.dataService.init(this.api.currentCity.id);
+        this.dataService.getDistricts().then(districts =>
             this.dataService.getConstructionTypes().then(constructionTypes => {
                 this.location.replaceState('calculator?city=' + this.api.currentCity.id);
 
